@@ -1,0 +1,10 @@
+langchain
+langchain-community
+langchain-core
+langchain-groq
+fpdf
+PyPDF2
+streamlit
+python-dotenv
+chromadb
+fastapi

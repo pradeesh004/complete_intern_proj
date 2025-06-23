@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AI Question Paper Generator</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            fontFamily: {
+              heading: ["Playfair Display", "serif"],
+              body: ["Inter", "sans-serif"],
+            },
+            colors: {
+              light: "#fdfdfd",
+              dark: "#111827",
+              rose: "#ec4899",
+              indigo: "#6366f1",
+              violet: "#a855f7",
+              slate: "#1e293b",
+            },
+          },
+        },
+      };
+    </script>
+
+    <!-- Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Playfair+Display:wght@600;800&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- External Styles -->
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+
+  <body
+    class="font-body bg-light text-slate dark:bg-dark dark:text-white transition duration-300"
+  >
+    <!-- Theme Toggle -->
+    <div class="flex justify-end p-4">
+      <label class="flex items-center gap-2 cursor-pointer text-sm font-medium">
+        <span>Light / Dark</span>
+        <input type="checkbox" onclick="switchTheme()" class="sr-only" />
+        <div
+          class="w-10 h-5 bg-indigo rounded-full relative transition duration-300"
+        >
+          <div
+            id="theme-knob"
+            class="absolute w-4 h-4 bg-white rounded-full top-0.5 left-0.5 transition-transform duration-300"
+          ></div>
+        </div>
+      </label>
+    </div>
+
+    <!-- Page Title -->
+    <header class="text-center mb-4">
+      <h1
+        class="text-4xl font-heading font-extrabold text-rose dark:text-violet"
+      >
+        AI Question Paper Generator
+      </h1>
+      <p class="text-lg text-slate-600 dark:text-slate-300 mt-1">
+        Generate customized question papers with intelligent mark allocation
+      </p>
+    </header>
+
+    <!-- Upload Source File Section -->
+    <!-- Stylish Upload Section -->
+    <section class="max-w-3xl mx-auto px-6 mb-10">
+      <h2 class="text-lg font-semibold mb-4 text-slate-700 dark:text-slate-200">
+        Upload Source File
+      </h2>
+
+      <div
+        class="relative border-2 border-dashed border-indigo rounded-xl p-6 bg-white dark:bg-slate-800 hover:shadow-lg transition"
+      >
+        <div class="flex items-center gap-4">
+          <!-- Upload Icon -->
+          <div
+            class="flex items-center justify-center w-14 h-14 rounded-full bg-indigo/10 text-indigo"
+          >
+            📄
+          </div>
+
+          <!-- Upload Label -->
+          <div class="flex flex-col">
+            <label
+              for="sourceFile"
+              class="cursor-pointer font-medium text-indigo hover:underline"
+            >
+              Click to upload a PDF or DOC file
+            </label>
+            <span class="text-sm text-slate-600 dark:text-black">
+              Only .pdf, .doc, or .docx formats are allowed
+            </span>
+          </div>
+        </div>
+
+        <!-- Real File Input (hidden) -->
+        <input
+          type="file"
+          id="sourceFile"
+          accept=".pdf,.doc,.docx"
+          class="absolute inset-0 opacity-0 cursor-pointer"
+        />
+      </div>
+    </section>
+
+    <!-- Marks Summary -->
+    <section class="max-w-4xl mx-auto mb-10">
+      <div
+        class="bg-gradient-to-r from-indigo to-violet text-white rounded-xl p-6 text-center shadow-lg"
+      >
+        <h2 class="text-xl font-semibold mb-2">Total Marks Allocated</h2>
+        <p class="text-4xl font-bold">5 / 100</p>
+        <p class="text-sm opacity-90">95 marks remaining</p>
+      </div>
+    </section>
+
+    <!-- Main Content Grid -->
+    <main class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 px-6">
+      <!-- Course Configuration -->
+      <section class="bg-white dark:bg-slate p-6 rounded-xl shadow-xl">
+        <h2 class="text-xl font-heading mb-4">Course Configuration</h2>
+
+        <label class="block text-sm font-semibold mb-1">Select Chapter</label>
+        <select
+          class="w-full p-2 mb-4 rounded border border-indigo bg-white text-black dark:bg-slate-700 dark:text-white"
+        >
+          <option disabled selected>-- Choose --</option>
+          <option>DBMS</option>
+          <option>OS</option>
+          <option>DSA</option>
+        </select>
+
+        <label class="block text-sm font-semibold mb-1">Difficulty Level</label>
+        <select
+          class="w-full p-2 rounded border border-indigo bg-white text-black dark:bg-slate-700 dark:text-white"
+        >
+          <option disabled selected>-- Choose --</option>
+          <option>Easy</option>
+          <option>Medium</option>
+          <option>Hard</option>
+        </select>
+      </section>
+
+      <!-- Mark Allocation -->
+      <section class="bg-white dark:bg-slate p-6 rounded-xl shadow-xl">
+        <h2 class="text-xl font-heading mb-4">Mark Allocation</h2>
+
+        <label class="block text-sm font-semibold mb-1">Total Marks</label>
+        <input
+          type="number"
+          placeholder="e.g. 100"
+          class="w-full p-2 mb-4 rounded border border-indigo dark:bg-slate-700 dark:text-white"
+        />
+
+        <p class="text-sm font-medium mb-2">Question Type</p>
+        <div class="space-y-2 mb-4">
+          <label
+            ><input type="radio" name="qtype" class="mr-2" />Short Answer</label
+          ><br />
+          <label
+            ><input type="radio" name="qtype" class="mr-2" />Long Answer</label
+          ><br />
+          <label><input type="radio" name="qtype" class="mr-2" />Both</label>
+        </div>
+
+        <label class="block text-sm font-semibold mb-1"
+          >Short Answer Marks</label
+        >
+        <input
+          type="number"
+          class="w-full p-2 mb-4 rounded border border-indigo dark:bg-slate-700 dark:text-white"
+        />
+
+        <label class="block text-sm font-semibold mb-1"
+          >Long Answer Marks</label
+        >
+        <input
+          type="number"
+          class="w-full p-2 rounded border border-indigo dark:bg-slate-700 dark:text-white"
+        />
+      </section>
+
+      <!-- Preview -->
+      <section class="bg-white dark:bg-slate p-6 rounded-xl shadow-xl">
+        <h2 class="text-xl font-heading mb-4">Preview</h2>
+        <div class="text-sm space-y-2">
+          <p>
+            <strong>Chapter:</strong>
+            <span class="italic text-indigo">[To be selected]</span>
+          </p>
+          <p>
+            <strong>Difficulty:</strong>
+            <span class="italic text-indigo">[To be selected]</span>
+          </p>
+          <ul class="list-disc list-inside">
+            <li>Short Answer: <span class="italic">[pending]</span> marks</li>
+            <li>Long Answer: <span class="italic">[pending]</span> marks</li>
+          </ul>
+          <p class="font-bold">
+            Total: <span class="italic">[total]</span> /
+            <span class="italic">[max]</span> marks
+          </p>
+        </div>
+      </section>
+
+      <!-- Export Options -->
+      <section
+        class="bg-white dark:bg-slate p-6 rounded-xl shadow-xl flex flex-col justify-between"
+      >
+        <div>
+          <h2 class="text-xl font-heading mb-4">Export Options</h2>
+          <p class="text-sm text-slate-600 dark:text-slate-300 mb-4">
+            Download your question paper:
+          </p>
+        </div>
+        <div class="flex flex-col gap-4">
+          <button class="bg-rose hover:bg-rose/90 text-white py-2 rounded">
+            Export Questions PDF
+          </button>
+          <button class="bg-indigo hover:bg-indigo/90 text-white py-2 rounded">
+            Export Q&A PDF
+          </button>
+        </div>
+        <p class="text-xs text-slate-400 dark:text-slate-300 mt-4">
+          * Export requires backend integration
+        </p>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer
+      class="text-center mt-16 text-sm text-slate-500 dark:text-slate-400"
+    >
+      © 2025 – All rights are reserved.
+    </footer>
+
+    <!-- External JS -->
+    <script src="js/theme-toggle.js"></script>
+  </body>
+</html>

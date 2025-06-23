@@ -1,0 +1,23 @@
+html.dark select,
+html.dark select option {
+  background-color: #1e293b;
+  color: white;
+}
+
+html.dark select:focus,
+html.dark select:hover {
+  background-color: #334155;
+  color: white;
+}
+
+html.dark input[type="number"] {
+  background-color: #1e293b;
+  color: white;
+  border-color: #6366f1;
+}
+
+html.dark input[type="number"]:focus {
+  background-color: #334155;
+  color: white;
+  outline: none;
+}
